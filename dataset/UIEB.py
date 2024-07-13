@@ -1,9 +1,7 @@
 import os
-import random
 from PIL import Image
 import torch.utils.data as data
 import torchvision.transforms as tfs
-from torchvision.transforms import functional as FF
 
 
 class UIEBDataset(data.Dataset):
@@ -34,7 +32,17 @@ class UIEBDataset(data.Dataset):
                     "filename": data,
                 })
         return data_infos
-
+    
+    def transform_data(self, data, target):
+        data = tfs.Resize([self.train_size, self.train_size])(data)
+        target = tfs.Resize([self.train_size, self.train_size])(target)
+        data = tfs.ToTensor()(data)
+        target = tfs.ToTensor()(target)
+        if self.input_norm:
+            data = tfs.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])(data)
+            target = tfs.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])(target)
+        return data, target
+    
     def __len__(self):
         return len(self.data_infos)
 
@@ -45,4 +53,7 @@ class UIEBDataset(data.Dataset):
             target = Image.open(result['gt_path']).convert('RGB')
         else:
             target = Image.open(result['image_path']).convert('RGB')
+            
+        data, target = self.transform_data(data, target)
+
         return data, target, result["filename"]
