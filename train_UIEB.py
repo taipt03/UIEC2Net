@@ -1,4 +1,5 @@
 import os
+import wandb
 import numpy as np
 from argparse import Namespace
 import argparse
@@ -138,6 +139,11 @@ def main():
     seed = 42
     seed_everything(seed)
 
+    logger = WandbLogger(
+        project="UIE",
+        name=hparams.model_name,
+        log_model=True
+    )
     
     RESUME = False
     checkpoint_path = "./checkpoints/UIEB/"
