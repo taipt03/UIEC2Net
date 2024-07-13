@@ -18,6 +18,10 @@ class UIEBDataset(data.Dataset):
             self.ann_file = os.path.join(self.data_path, "5K", "train.txt")
         else:
             self.ann_file = os.path.join(self.data_path, "5K", "test.txt")
+        if self.pred_flag:
+            self.ann_file = os.path.join(self.data_path, "UIEB", "challenging.txt")
+        else:
+            self.data_infos = self.load_annotations()
 
     def load_annotations(self):
         data_infos = []
