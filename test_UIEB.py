@@ -27,8 +27,6 @@ hparams = parser.parse_args()
 model_path = './checkpoints/UIEB/' + hparams.model_name + '.ckpt'
 
 pred_path = './data/UIEB/All_Results/' + hparams.model_name + '/C60/'
-if not os.path.exists(test_path):
-    os.makedirs(test_path)
 if not os.path.exists(pred_path):
     os.makedirs(pred_path)
 
