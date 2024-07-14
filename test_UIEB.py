@@ -26,15 +26,12 @@ hparams = parser.parse_args()
 
 model_path = './checkpoints/UIEB/' + hparams.model_name + '.ckpt'
 
-test_path = './data/UIEB/All_Results/' + hparams.model_name + '/T90/'
 pred_path = './data/UIEB/All_Results/' + hparams.model_name + '/C60/'
 if not os.path.exists(test_path):
     os.makedirs(test_path)
 if not os.path.exists(pred_path):
     os.makedirs(pred_path)
 
-test_set = UIEBDataset("./data/", train_flag=False, pred_flag=False, train_size=hparams.crop_size, input_norm=hparams.input_norm)  # T90
-test_loader = DataLoader(test_set, batch_size=1, shuffle=False)
 
 pred_set = UIEBDataset("./data/", train_flag=False, pred_flag=True, train_size=hparams.crop_size, input_norm=hparams.input_norm)  # C60
 pred_loader = DataLoader(pred_set, batch_size=1, shuffle=False)
@@ -55,19 +52,7 @@ print("missing keys: ", missing_keys)
 print("unexpected keys: ", unexpected_keys)
 model.eval()
 
-print("generate enhanced images for test set (90 images)")
-for idx, (x, y, filename) in tqdm(enumerate(test_loader),total=len(test_loader)):
-    with torch.no_grad():
-        x = x.cuda()
-        y_hat = model(x)
-        gt_img = y[0].permute(1,2,0).detach().cpu().numpy()
-
-        pred_img_tensor = normalize_img(y_hat)
-        pred_img = pred_img_tensor[0].permute(1,2,0).detach().cpu().numpy()
-
-        save_image(pred_img_tensor[0], os.path.join(test_path, filename[0]), normalize=False)
-
-print("generate enhanced images for challenging set (60 images)")
+print("generate enhanced images for challenging set (2 images)")
 for idx, (x, y, filename) in tqdm(enumerate(pred_loader),total=len(pred_loader)):
     with torch.no_grad():
         x = x.cuda()

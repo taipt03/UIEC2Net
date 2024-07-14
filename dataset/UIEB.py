@@ -17,9 +17,23 @@ class UIEBDataset(data.Dataset):
         else:
             self.ann_file = os.path.join(self.data_path, "5K", "test.txt")
         if self.pred_flag:
-            self.ann_file = os.path.join(self.data_path, "UIEB", "challenging.txt")
+            self.ann_file = os.path.join(self.data_path, "5K", "challenging.txt")
+            self.data_infos = self.load_unpaired()
+
         else:
             self.data_infos = self.load_annotations()
+
+    def load_unpaired(self):
+        data_infos = []
+        with open(self.ann_file, 'r') as f:
+            data_list = f.read().splitlines()
+            for data in data_list:
+                data_infos.append({
+                    "image_path": os.path.join("./data/5K/test", data),
+                    "filename": data,
+                })
+        return data_infos
+
 
     def load_annotations(self):
         data_infos = []
