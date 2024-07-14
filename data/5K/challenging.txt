@@ -1,2 +1,10 @@
 IMG_1019_bbox2.jpg
 green_104.jpg
+gray_241.jpg
+gray_242.jpg
+gray_244.jpg
+gray_246.jpg
+gray_249.jpg
+white_456.jpg
+white_457.jpg 
+white_467.jpg

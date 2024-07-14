@@ -42,7 +42,7 @@ class UIEBDataset(data.Dataset):
             for data in data_list:
                 data_infos.append({
                     "image_path": os.path.join("/kaggle/input/adobe-fivek/raw", data),
-                    "gt_path": os.path.join("/kaggle/input/adobe-fivek/e", data),
+                    "gt_path": os.path.join("/kaggle/input/adobe-fivek/b", data),
                     "filename": data,
                 })
         return data_infos
