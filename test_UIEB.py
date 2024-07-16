@@ -31,15 +31,12 @@ if not os.path.exists(pred_path):
     os.makedirs(pred_path)
 
 
-pred_set = UIEBDataset("./data/", train_flag=False, pred_flag=True, train_size=hparams.crop_size, input_norm=hparams.input_norm)  # C60
+pred_set = UIEBDataset("./data/", train_flag=False, pred_flag=True, train_size=hparams.crop_size, input_norm=hparams.input_norm)
 pred_loader = DataLoader(pred_set, batch_size=1, shuffle=False)
 
 model_zoos = {
-    "UWCNN": UWCNN,
     "UIEC2Net": UIEC2Net,
-    "NU2Net": NU2Net,
-    "FIVE_APLUS": FIVE_APLUSNet,
-    "UTrans": UTrans,
+
     }
 model = model_zoos[hparams.model_name]().cuda()
 ckpt = torch.load(model_path)
@@ -50,7 +47,7 @@ print("missing keys: ", missing_keys)
 print("unexpected keys: ", unexpected_keys)
 model.eval()
 
-print("generate enhanced images for challenging set (2 images)")
+print("generate enhanced images for challenging set")
 for idx, (x, y, filename) in tqdm(enumerate(pred_loader),total=len(pred_loader)):
     with torch.no_grad():
         x = x.cuda()
