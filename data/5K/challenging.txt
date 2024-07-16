@@ -8,3 +8,6 @@ gray_249.jpg
 white_456.jpg
 white_457.jpg 
 white_467.jpg
+1.jpeg
+2.jpeg
+3.jpeg
