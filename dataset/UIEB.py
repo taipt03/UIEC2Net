@@ -32,7 +32,7 @@ class UIEBDataset(data.Dataset):
                 data_infos.append({
                     #modify the image_path & filename respectively.
                     "image_path": data,   #path to the image
-                    "filename": data.path.basename(),
+                    "filename": os.path.basename(data),
                 })
         return data_infos
 
