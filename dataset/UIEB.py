@@ -18,7 +18,7 @@ class UIEBDataset(data.Dataset):
             self.ann_file = os.path.join(self.data_path, "5K", "test.txt")
         if self.pred_flag:
         #modify test set here!!!!
-            self.ann_file = os.path.join(self.data_path, "5K", "challenging.txt")
+            self.ann_file = os.path.join(self.data_path, "5K", "image_file_paths.txt")
             self.data_infos = self.load_unpaired()
 
         else:
@@ -31,8 +31,8 @@ class UIEBDataset(data.Dataset):
             for data in data_list:  #iterate file_path in the test set
                 data_infos.append({
                     #modify the image_path & filename respectively.
-                    "image_path": os.path.join("./data/5K/test", data),   #path to the image
-                    "filename": data,
+                    "image_path": data,   #path to the image
+                    "filename": data.basename(),
                 })
         return data_infos
 
